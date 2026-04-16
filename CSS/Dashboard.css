@@ -1,0 +1,597 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #ecf0f1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= Header ================= */
+.header {
+    background-color: #3498db;
+    color: white;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    font-size: 15px;
+    z-index: 10;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-icon {
+    background: rgba(255,255,255,0.2);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ================= Main Wrapper ================= */
+.main-wrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ================= Sidebar ================= */
+.sidebar {
+    width: 240px;
+    background-color: #2c3e50;
+    color: #bdc3c7;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #1a252f;
+}
+
+.sidebar ul { list-style: none; }
+.sidebar li { border-bottom: 1px solid #34495e; }
+
+.sidebar a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: #bdc3c7;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.sidebar a:hover {
+    background-color: #1a252f;
+    color: white;
+}
+
+.sidebar a.active {
+    background-color: #34495e;
+    color: #fff;
+    border-right: 3px solid #3498db;
+}
+
+.sidebar i.icon {
+    margin-left: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+.sidebar i.arrow { font-size: 10px; }
+
+.logout {
+    margin-top: auto;
+    border-top: 1px solid #34495e;
+}
+
+.logout a { color: #e74c3c; }
+
+/* ================= Content ================= */
+.content {
+    flex: 1;
+    background-color: #ecf0f1;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ================= Sub Header ================= */
+.sub-header {
+    background-color: #607d8b;
+    color: white;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.sub-header-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.sub-header-right h3 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.sub-header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* ================= Filter ================= */
+.filter-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #d2d6de;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.filter-container:focus-within {
+    border-color: #3c8dbc;
+    box-shadow: 0 0 0 2px rgba(60, 141, 188, 0.2);
+}
+
+.filter-container:hover {
+    border-color: #bdc3c7;
+}
+
+.filter-icon {
+    color: #7f8c8d;
+    padding: 0 12px;
+    font-size: 14px;
+    border-left: 1px solid #d2d6de;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa;
+}
+
+.filter-select {
+    background-color: #ffffff;
+    border: none;
+    color: #555;
+    padding: 8px 35px 8px 12px;
+    font-size: 13px;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    min-width: 180px;
+    background-image: url("image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237f8c8d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+}
+
+.filter-select option { padding: 8px; color: #333; }
+.filter-select option:first-child { color: #95a5a6; font-style: italic; }
+
+/* ================= Buttons ================= */
+.btn-add {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.2s;
+}
+
+.btn-add:hover { background-color: #219150; }
+
+/* ================= Table ================= */
+.table-wrapper {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+thead { background-color: #f9f9f9; }
+
+th {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    color: #555;
+    font-weight: bold;
+}
+
+td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    color: #333;
+    font-size: 14px;
+}
+
+.role-admin { color: #c0392b; font-weight: bold; }
+.role-supervisor { color: #2980b9; font-weight: bold; }
+.role-volunteer { color: #27ae60; font-weight: bold; }
+.email-text { color: #8e44ad; }
+
+.action-icon {
+    cursor: pointer;
+    margin: 0 5px;
+    font-size: 14px;
+    transition: transform 0.2s;
+}
+
+.action-icon:hover { transform: scale(1.2); }
+.fa-pen-to-square { color: #3498db; }
+.fa-trash-can { color: #e74c3c; }
+
+/* ================= Pagination ================= */
+.pagination-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-top: 1px solid #ddd;
+    margin-top: auto;
+}
+
+.pagination-info {
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+.pagination-info span {
+    color: #2c3e50;
+    font-weight: 700;
+    margin: 0 3px;
+}
+
+.pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.page-btn {
+    background-color: #ffffff;
+    border: 1px solid #d2d6de;
+    color: #555;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-family: 'Cairo', sans-serif;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 40px;
+    justify-content: center;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.page-btn:disabled {
+    background-color: #ecf0f1;
+    color: #bdc3c7;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.page-btn.active {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+    font-weight: 700;
+}
+
+.pagination-dots {
+    color: #7f8c8d;
+    padding: 0 5px;
+    font-size: 13px;
+}
+
+/* ================= Footer ================= */
+.footer {
+    background-color: #3498db;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    font-size: 13px;
+    border-top: 3px solid #2980b9;
+}
+
+/* ================= Responsive ================= */
+@media (max-width: 768px) {
+    .sidebar { width: 60px; }
+    .sidebar a span, .sidebar i.arrow { display: none; }
+    .sidebar i.icon { margin-left: 0; font-size: 18px; }
+    
+    .sub-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .sub-header-left {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .filter-container, .btn-add {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .pagination-container {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .pagination-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pagination-dots { display: none; }
+}
+
+/* ========================================== */
+/* 🎯 تنسيق الـ Modal - محسن ومضمون العمل */
+/* ========================================== */
+
+/* إخفاء الـ Modal افتراضياً (يظهر عبر Bootstrap) */
+.modal.fade { display: none; }
+.modal.show { display: block; }
+
+/* خلفية الـ Modal */
+.modal-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    backdrop-filter: blur(3px);
+}
+
+/* حاوية الـ Modal */
+.modal#addUserModal .modal-dialog {
+    max-width: 750px;
+    margin: 2rem auto;
+}
+
+/* محتوى الـ Modal */
+.modal#addUserModal .modal-content {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+/* رأس الـ Modal - اللون الأزرق المطلوب */
+.modal#addUserModal .modal-header {
+    background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+    color: white;
+    padding: 18px 25px;
+    border: none;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.modal#addUserModal .modal-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.modal#addUserModal .modal-header .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    margin: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: none;
+}
+
+.modal#addUserModal .modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+/* جسم الـ Modal */
+.modal#addUserModal .modal-body {
+    padding: 25px;
+    background-color: #ffffff;
+}
+
+.modal#addUserModal .row {
+    margin: 0 -10px;
+}
+
+.modal#addUserModal .col-md-6 {
+    padding: 0 10px;
+}
+
+/* حقول النموذج */
+.modal#addUserModal .form-label {
+    display: block;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 13px;
+}
+
+.modal#addUserModal .form-control,
+.modal#addUserModal .form-select {
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #d2d6de;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-family: 'Cairo', sans-serif;
+    background-color: #fff;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.modal#addUserModal .form-control::placeholder,
+.modal#addUserModal .form-select::placeholder {
+    color: #95a5a6;
+    font-size: 12px;
+}
+
+.modal#addUserModal .form-control:focus,
+.modal#addUserModal .form-select:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+    background-color: #fff;
+}
+
+.modal#addUserModal .form-select {
+    cursor: pointer;
+    background-image: url("image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237f8c8d' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 12px center;
+    background-size: 14px;
+    padding-right: 14px;
+    padding-left: 35px;
+}
+
+/* تذييل الـ Modal */
+.modal#addUserModal .modal-footer {
+    padding: 18px 25px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ecf0f1;
+    border-radius: 0 0 10px 10px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* أزرار الـ Modal */
+.modal#addUserModal .btn-primary,
+.modal#addUserModal .btn-secondary {
+    padding: 10px 22px;
+    border-radius: 5px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* زر الحفظ - أزرق */
+.modal#addUserModal .btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.modal#addUserModal .btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.modal#addUserModal .btn-primary:active {
+    transform: translateY(0);
+}
+
+/* زر الإلغاء - رمادي */
+.modal#addUserModal .btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.modal#addUserModal .btn-secondary:hover {
+    background-color: #7f8c8d;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(149, 165, 166, 0.4);
+}
+
+.modal#addUserModal .btn-secondary:active {
+    transform: translateY(0);
+}
+
+/* تحسينات إضافية للـ Modal */
+.modal#addUserModal input[type="email"],
+.modal#addUserModal input[type="text"],
+.modal#addUserModal input[type="tel"],
+.modal#addUserModal input[type="password"] {
+    direction: ltr;
+    text-align: right;
+}
+
+.modal#addUserModal input[type="email"]::placeholder,
+.modal#addUserModal input[type="text"]::placeholder,
+.modal#addUserModal input[type="tel"]::placeholder {
+    direction: rtl;
+}
+
+/* تحسين ظهور الـ Modal على الشاشات الصغيرة */
+@media (max-width: 768px) {
+    .modal#addUserModal .modal-dialog {
+        margin: 1rem;
+        max-width: calc(100% - 2rem);
+    }
+    
+    .modal#addUserModal .modal-body {
+        padding: 20px 15px;
+    }
+    
+    .modal#addUserModal .modal-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+    
+    .modal#addUserModal .btn-primary,
+    .modal#addUserModal .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}
