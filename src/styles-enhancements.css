@@ -1,0 +1,311 @@
+/* ============================================================
+   ENHANCEMENTS LAYER — responsiveness + micro-interactions ONLY
+   The original visual design is preserved at desktop sizes.
+   ============================================================ */
+
+/* ── Smoother global typography rendering ── */
+html { -webkit-text-size-adjust: 100%; }
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* ── Prevent any element from causing horizontal page scroll ── */
+html, body { overflow-x: hidden; max-width: 100%; }
+.content-wrapper { max-width: 100%; }
+img, canvas, svg { max-width: 100%; }
+
+/* ── Universal smooth focus ring (subtle, matches blue palette) ── */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.nav-item:focus-visible,
+.action-btn-card:focus-visible,
+.volunteer-item:focus-visible {
+    outline: 2px solid rgba(52, 152, 219, 0.55);
+    outline-offset: 2px;
+}
+
+/* ── Click feedback for any portal button ── */
+.btn-portal,
+.btn-alert,
+.btn-export,
+.btn-submit,
+.btn-change {
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+.btn-portal:active,
+.btn-alert:active,
+.btn-export:active,
+.btn-submit:active,
+.btn-change:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.05s ease;
+}
+
+/* ── Disabled state (no design change, just clearly inert) ── */
+.btn-portal:disabled,
+.btn-alert:disabled,
+.btn-export:disabled,
+.btn-submit:disabled,
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* ── Inline button spinner (only when JS sets data-loading) ── */
+button[data-loading="true"] { position: relative; color: transparent !important; pointer-events: none; }
+button[data-loading="true"]::after {
+    content: "";
+    position: absolute; top: 50%; left: 50%;
+    width: 14px; height: 14px; margin: -7px 0 0 -7px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    color: white;
+    animation: btn-spin 0.6s linear infinite;
+}
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* ── Form input — softer focus + invalid state ── */
+.form-control { transition: border-color 0.15s ease, box-shadow 0.15s ease; }
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.12);
+}
+.form-control[aria-invalid="true"],
+.form-control.is-invalid {
+    border-color: var(--red);
+}
+.form-control[aria-invalid="true"]:focus,
+.form-control.is-invalid:focus {
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.15);
+}
+.field-error {
+    color: var(--red); font-size: 0.75rem; font-weight: 700;
+    margin-top: 5px; display: flex; align-items: center; gap: 5px;
+}
+
+/* ── Page transition (very subtle fade-in for content) ── */
+.content-wrapper { animation: page-fade 0.25s ease both; }
+@keyframes page-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* ── Table rows — soft hover (already existed, just smoother) ── */
+.portal-table tbody tr { transition: background-color 0.15s ease; }
+
+/* ── Modal — gentle scale-in (matches existing portal alert vibe) ── */
+.modal-overlay { backdrop-filter: blur(2px); animation: fadeIn 0.18s ease; }
+.modal-content { animation: scaleIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1); }
+
+/* ── Mobile menu toggle (hidden on desktop) ── */
+.mobile-menu-toggle {
+    display: none;
+    background: transparent; border: none; color: white;
+    font-size: 1.2rem; cursor: pointer; padding: 6px 10px; margin-left: 6px;
+    border-radius: 4px; transition: background 0.15s;
+}
+.mobile-menu-toggle:hover { background: rgba(255,255,255,0.15); }
+.sidebar-backdrop {
+    display: none;
+    position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45); z-index: 999;
+    animation: fadeIn 0.2s ease;
+}
+
+/* ── Tables: scroll horizontally inside their wrapper ── */
+.portal-table { min-width: 600px; }
+/* Auto-wrap any direct ancestor that contains a portal-table */
+.content-wrapper :is(div, section):has(> .portal-table),
+.content-wrapper :is(div, section):has(> table.portal-table) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   ============================================================ */
+
+/* Large desktops: nothing to do */
+
+/* Tablets / small laptops */
+@media (max-width: 1024px) {
+    .navbar-brand-title { font-size: 0.9rem; }
+    .navbar-brand-title span, .navbar-brand-title { letter-spacing: 0; }
+    .content-wrapper { padding: 15px; }
+    .portal-stat-card { padding: 16px; }
+    .modal-content { width: 92vw !important; max-width: 560px; }
+}
+
+/* Tablet portrait specific */
+@media (max-width: 900px) {
+    /* Section header bar with custom right-side group: allow wrapping */
+    .section-header-bar { flex-wrap: wrap; gap: 8px; }
+    .section-header-bar > * { min-width: 0; }
+    .export-container { flex-wrap: wrap; }
+
+    /* Action bar wraps and items shrink to fit */
+    .action-bar { flex-wrap: wrap; gap: 8px; }
+    .action-bar > div { min-width: 0; flex-wrap: wrap; }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    /* Top navbar: show hamburger, shrink brand text */
+    .mobile-menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+    .top-navbar { padding: 0 10px; }
+    .navbar-brand-title { font-size: 0.78rem; gap: 6px; }
+    .navbar-user-info { display: none; }
+    .navbar-user-actions { gap: 10px; }
+
+    /* Sidebar slides in from the right */
+    .sidebar {
+        width: 240px;
+        transform: translateX(100%);
+        transition: transform 0.25s ease;
+        box-shadow: -4px 0 18px rgba(0,0,0,0.25);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .sidebar-backdrop.show { display: block; }
+
+    /* Content takes full width */
+    .content-wrapper { margin-right: 0; padding: 12px; padding-bottom: 70px; }
+
+    /* Stats: stack 1 column */
+    .portal-stats-container { grid-template-columns: 1fr; gap: 12px; }
+
+    /* Section headers + action bar wrap */
+    .section-header-bar { flex-wrap: wrap; gap: 8px; font-size: 0.8rem; padding: 10px 12px; }
+    .action-bar { padding: 12px; gap: 8px; }
+    .action-bar > div, .action-bar > button { width: 100%; }
+    .action-bar input[type="text"] { width: 100% !important; }
+
+    /* Tables horizontally scroll */
+    .portal-table { font-size: 0.8rem; }
+    .portal-table th, .portal-table td { padding: 8px; }
+
+    /* Make ANY inline grid using 2 columns stack into 1 */
+    .content-wrapper div[style*="grid-template-columns: 2fr 1fr"],
+    .content-wrapper div[style*="grid-template-columns: 1fr 1fr"],
+    .content-wrapper div[style*="grid-template-columns: 1fr 2fr"],
+    .content-wrapper div[style*="grid-template-columns: 200px 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Inline-styled flex rows in section-header / action-bar wrap onto multiple lines */
+    .section-header-bar > div { flex-wrap: wrap; gap: 8px; width: 100%; justify-content: flex-start; }
+    .action-bar > div[style*="display: flex"] { flex-wrap: wrap; width: 100%; gap: 8px; }
+    .action-bar input[type="text"],
+    .action-bar input[type="date"],
+    .action-bar select { width: 100% !important; min-width: 0; }
+    .action-bar > div[style*="border:"] { width: 100% !important; }
+
+    /* Date-range pills: stack vertically */
+    .action-bar > div[style*="display: flex"][style*="border"] { flex-wrap: wrap; }
+
+    /* Buttons inside section-header should stay aligned right but wrap */
+    .section-header-bar > button { width: 100%; justify-content: center; }
+
+    /* Modals */
+    .modal-content { width: 94vw !important; max-width: 94vw; max-height: 88vh; overflow-y: auto; }
+    .modal-body { padding: 18px; }
+    .modal-body div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+
+    /* Footer */
+    .footer-banner { font-size: 0.7rem; padding: 8px; }
+
+    /* Quick actions */
+    .quick-action-grid { grid-template-columns: repeat(2, 1fr); }
+
+    /* Export buttons stack */
+    .export-container { flex-wrap: wrap; }
+}
+
+/* Very small phones */
+@media (max-width: 420px) {
+    .navbar-brand-title { font-size: 0.7rem; }
+    .quick-action-grid { grid-template-columns: 1fr; }
+    .portal-alert-card { width: 92vw; }
+    .stat-card-number-circle { gap: 4px; }
+    .circle-digit { width: 28px; height: 28px; font-size: 0.9rem; }
+}
+
+/* Login page responsiveness */
+@media (max-width: 480px) {
+    .login-card { max-width: 100%; }
+}
+
+/* ============================================================
+   PRINT — keep export-to-PDF clean
+   ============================================================ */
+@media print {
+    .top-navbar, .sidebar, .footer-banner, .mobile-menu-toggle,
+    .action-bar, .export-container, .portal-pagination,
+    .modal-overlay, .portal-alert-overlay, .sidebar-backdrop { display: none !important; }
+    .content-wrapper { margin: 0 !important; padding: 0 !important; }
+    body { background: white !important; }
+}
+
+/* ============================================================
+   Unified Action Buttons (table "الإجراءات" cells, etc.)
+   Same look, size, spacing, and animation across the entire site.
+   ============================================================ */
+.action-cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+}
+.action-cell > .btn-action + .btn-action {
+    margin-inline-start: 4px;
+}
+.btn-action {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #fff;
+    font-size: 0.95rem;
+    line-height: 1;
+    background: var(--grey);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    transition: background-color 0.2s ease,
+                transform 0.18s ease,
+                box-shadow 0.25s ease,
+                filter 0.25s ease;
+}
+.btn-action:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.06);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+}
+.btn-action:active {
+    transform: translateY(0);
+    filter: brightness(0.96);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+.btn-action:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.35),
+                0 4px 10px rgba(0, 0, 0, 0.18);
+}
+.btn-action.btn-action-blue   { background: var(--blue); }
+.btn-action.btn-action-green  { background: var(--green); }
+.btn-action.btn-action-red    { background: var(--red); }
+.btn-action.btn-action-grey   { background: var(--grey); }
+
+/* Responsive — keep buttons compact on narrow screens */
+@media (max-width: 600px) {
+    .action-cell { gap: 6px; }
+    .btn-action { width: 32px; height: 32px; font-size: 0.85rem; border-radius: 7px; }
+}
+@media (max-width: 380px) {
+    .btn-action { width: 30px; height: 30px; font-size: 0.8rem; }
+}
